@@ -39,7 +39,8 @@ public class BetplayDAO implements CRUDOperation {
 		nBetplay.setPartido(strs[4]);
 		nBetplay.setResultado(strs[5]);
 		nBetplay.setValorApuesta(Double.parseDouble(strs[6]));
-
+		apBetplay.add(nBetplay);
+		writeSerializable();
 	}
 
 	@Override

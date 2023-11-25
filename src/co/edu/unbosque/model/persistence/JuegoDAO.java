@@ -3,6 +3,7 @@ package co.edu.unbosque.model.persistence;
 import java.util.ArrayList;
 
 import co.edu.unbosque.model.JuegoDTO;
+import co.edu.unbosque.util.PresupuestoExcedidoException;
 
 /**
  * 
@@ -14,34 +15,18 @@ import co.edu.unbosque.model.JuegoDTO;
 
 public class JuegoDAO {
 
-	// Lista que almacena los juegos
+	private ConfiguracionDAO confDao;
 	private ArrayList<JuegoDTO> listaJuegos;
-
-	// Ruta del archivo CSV para guardar datos
-	private final String FILEURL = "csv/juego.csv";
-
-	// Nombre del archivo serializado
 	private final String SERIAL_FILENAME = "juegos.dat";
 
-	// Índice actual de la lista
-	int index = 0;
-
-	// Cadena de salida para escritura en archivos
-	String exit = "";
-
-	/**
-	 * Constructor de la clase JuegoDAO.
-	 */
-
 	public JuegoDAO() {
-		// TODO Auto-generated constructor stub
 		listaJuegos = new ArrayList<JuegoDTO>();
+		confDao = new ConfiguracionDAO(); // Initialize ConfiguracionDAO and load configuration
+
 		if (FileHandler.openAndReadFileJuego(SERIAL_FILENAME) != null) {
 			@SuppressWarnings("unchecked")
 			ArrayList<JuegoDTO> temp2 = FileHandler.openAndReadFileJuego(SERIAL_FILENAME);
 			listaJuegos = temp2;
-		} else {
-			listaJuegos = new ArrayList<>();
 		}
 	}
 
@@ -57,40 +42,6 @@ public class JuegoDAO {
 	 * Método para cargar datos desde un archivo CSV.
 	 */
 
-	public void loadFromFile() {
-		String content = FileHandler.openAndReadFile(FILEURL);
-		if (content.equals("")) {
-			return;
-		}
-		String[] lines = content.split("\n");
-		for (int i = 0; i < lines.length; i++) {
-			String[] strs = lines[i].split(";");
-			int idJuego = Integer.parseInt(strs[0]);
-			String nombreJuego = strs[1];
-			String tipoJuego = strs[2];
-			double presupuesto = Double.parseDouble(strs[3]);
-			listaJuegos.add(new JuegoDTO(nombreJuego, tipoJuego, presupuesto, idJuego));
-		}
-	}
-
-	/**
-	 * Método para escribir datos en un archivo CSV.
-	 */
-
-	public void writeOnFile() {
-		exit = "";
-		listaJuegos.forEach((juego) -> {
-			if (juego.getClass().getSimpleName().toString().equals("JuegoDTO")) {
-				exit += juego.getIdJuego() + ";";
-				exit += juego.getNombreJuego() + ";";
-				exit += juego.getTipoJuego() + ";";
-				exit += juego.getPresupuesto() + ";";
-
-			}
-		});
-		FileHandler.openAndWriteFile(FILEURL, exit);
-	}
-
 	/**
 	 * Crea un nuevo juego a partir de los parámetros proporcionados y lo agrega a
 	 * la lista de juegos.
@@ -99,13 +50,24 @@ public class JuegoDAO {
 	 * @param nombreJuego nombre del juego
 	 * @param tipoJuego   tipo de juego
 	 * @param Presupuesto presupuesto estimado para cada juego
+	 * @throws PresupuestoExcedidoException
 	 */
 
-	public void crearJuego(int id, String nombreJuego, String tipoJuego, double Presupuesto) {
-		// TODO Auto-generated method stub
-		listaJuegos.add(new JuegoDTO(nombreJuego, tipoJuego, Presupuesto, id));
+	public void crearJuego(int id, String nombreJuego, String tipoJuego, double presupuesto)
+			throws PresupuestoExcedidoException {
+		if (confDao == null) {
+			throw new IllegalStateException("confDao is not initialized");
+		}
+
+		double presupuestoTotalConfigurado = confDao.getConfiguracion().getPresupuestoTotal();
+
+		if (presupuesto > presupuestoTotalConfigurado) {
+			throw new PresupuestoExcedidoException(
+					"El presupuesto del juego excede el límite establecido en la configuración");
+		}
+
+		listaJuegos.add(new JuegoDTO(nombreJuego, tipoJuego, presupuesto, id));
 		writeSerializable();
-		writeOnFile();
 	}
 
 	/**
@@ -144,30 +106,34 @@ public class JuegoDAO {
 	 * @param idJuego          El ID del juego.
 	 * @param nuevoPresupuesto El nuevo presupuesto para el juego.
 	 * @return true si la actualización fue exitosa, de lo contrario, false.
+	 * @throws PresupuestoExcedidoException
 	 */
-	public boolean actualizarPresupuestoJuego(int idJuego, double nuevoPresupuesto) {
+	public boolean actualizarPresupuestoJuego(int idJuego, double nuevoPresupuesto)
+			throws PresupuestoExcedidoException {
+		double presupuestoTotalConfigurado = confDao.getConfiguracion().getPresupuestoTotal();
+
+		if (nuevoPresupuesto > presupuestoTotalConfigurado) {
+			throw new PresupuestoExcedidoException(
+					"El nuevo presupuesto del juego excede el límite establecido en la configuración");
+		}
+
 		for (JuegoDTO juego : listaJuegos) {
 			if (juego.getIdJuego() == idJuego) {
 				juego.setPresupuesto(nuevoPresupuesto);
-				
 				writeSerializable();
-				writeOnFile();
 				return true;
 			}
 		}
 		return false; // Indica que no se encontró el juego
 	}
-	
+
 	public int obtenerProximoId() {
-	    if (listaJuegos.isEmpty()) {
-	        return 1; // Si la lista está vacía, retorna 1 como primer ID
-	    } else {
-	        // Encuentra el máximo ID actual y devuelve el siguiente
-	        return listaJuegos.stream()
-	                .mapToInt(JuegoDTO::getIdJuego)
-	                .max()
-	                .orElse(0) + 1;
-	    }
+		if (listaJuegos.isEmpty()) {
+			return 1; // Si la lista está vacía, retorna 1 como primer ID
+		} else {
+			// Encuentra el máximo ID actual y devuelve el siguiente
+			return listaJuegos.stream().mapToInt(JuegoDTO::getIdJuego).max().orElse(0) + 1;
+		}
 	}
 
 	public ArrayList<JuegoDTO> getListaJuegos() {
@@ -178,12 +144,5 @@ public class JuegoDAO {
 		this.listaJuegos = listaJuegos;
 	}
 
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
-	}
 
 }

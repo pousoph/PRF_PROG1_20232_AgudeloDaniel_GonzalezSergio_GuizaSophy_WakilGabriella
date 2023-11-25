@@ -15,17 +15,15 @@ public class MenuPrincipal extends JFrame {
 		setBounds(0, 0, 800, 600);
 		setBackground(Color.WHITE);
 		setTitle("Casa de Apuestas DSGS");
+		setLayout(new BorderLayout());
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// Crear un JPanel para contener el PanelBotonesMenuP y centrarlo
 		JPanel contenedorPanelBotones = new JPanel(new BorderLayout());
 
 		p5 = new PanelBotonesMenuP();
 		contenedorPanelBotones.add(p5, BorderLayout.CENTER);
 
-		// Usar un GridLayout en la ventana principal
-		setLayout(new GridLayout(1, 1));
 		add(contenedorPanelBotones);
 
 		setVisible(false);

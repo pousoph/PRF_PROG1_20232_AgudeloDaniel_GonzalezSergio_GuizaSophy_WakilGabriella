@@ -13,24 +13,26 @@ public class ConfiguracionDAO {
 	
 	private final String CONFIG_FILE = "confi.properties";
 	private ConfiguracionDTO configuracion; // Agregamos el atributo
+	
+	public ConfiguracionDAO() {
+		cargarConfiguracion();
+	}
 
 	public void cargarConfiguracion() {
-		Properties properties = new Properties();
-		configuracion = new ConfiguracionDTO(); // Inicializamos la configuración
+        Properties properties = new Properties();
+        configuracion = new ConfiguracionDTO();
 
-		try (InputStream input = new FileInputStream(CONFIG_FILE)) {
-			properties.load(input);
+        try (InputStream input = new FileInputStream(CONFIG_FILE)) {
+            properties.load(input);
 
-			configuracion.setNombreCasa(properties.getProperty("nombre_casa"));
-			configuracion.setNumeroSedes(Integer.parseInt(properties.getProperty("numero_sedes", "0")));
-			configuracion.setPresupuestoTotal(Double.parseDouble(properties.getProperty("presupuesto_total", "0.0")));
+            configuracion.setNombreCasa(properties.getProperty("nombre_casa"));
+            configuracion.setNumeroSedes(Integer.parseInt(properties.getProperty("numero_sedes", "0")));
+            configuracion.setPresupuestoTotal(Double.parseDouble(properties.getProperty("presupuesto_total", "0.0")));
 
-		} catch (IOException e) {
-			// Manejar la excepción de manera adecuada o lanzar una nueva excepción con un
-			// mensaje más informativo
-			throw new RuntimeException("Error al cargar la configuración: " + e.getMessage(), e);
-		}
-	}
+        } catch (IOException e) {
+            throw new RuntimeException("Error al cargar la configuración: " + e.getMessage(), e);
+        }
+    }
 
 	public void guardarConfiguracion(ConfiguracionDTO configuracionDTO) {
 		Properties properties = new Properties();

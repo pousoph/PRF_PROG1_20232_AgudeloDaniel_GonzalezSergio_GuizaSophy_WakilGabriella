@@ -35,6 +35,7 @@ import co.edu.unbosque.model.persistence.UsuarioDAO;
 import co.edu.unbosque.util.CedulaNotValidException;
 import co.edu.unbosque.util.NombreNotValidException;
 import co.edu.unbosque.util.NumeroNegativoException;
+import co.edu.unbosque.util.PresupuestoExcedidoException;
 import co.edu.unbosque.util.UsuarioNoEncontradoException;
 import co.edu.unbosque.view.Console;
 import co.edu.unbosque.view.MainWindow;
@@ -337,21 +338,33 @@ public class Controller implements ActionListener {
 
 		} else if (comando.equals("ACCEDER")) {
 			try {
-				String nombreUsuario = vInicioSesion.getPnUsuario().getTxtNombreUsuario().getText().toString();
-				String contrasena = vInicioSesion.getPnUsuario().getTxtContrasena().getText().toString();
-				if (usuarioNoEncontrado(nombreUsuario, contrasena)) {
-					// Llamar al método para realizar acciones después de la autenticación
-					accesoSiguientePestaña(nombreUsuario, contrasena);
-					vInicioSesion.getPnUsuario().getTxtNombreUsuario().setText("");
-					vInicioSesion.getPnUsuario().getTxtContrasena().setText("");
-					vInicioSesion.setVisible(false);
-					vMenuPrincipal.setVisible(true);
+				String nombreUsuario = vInicioSesion.getPnUsuario().getTxtNombreUsuario().getText();
+				char[] contrasenaChars = vInicioSesion.getPnUsuario().getTxtContrasena().getPassword();
+
+				if (nombreUsuario.isEmpty() || contrasenaChars.length == 0) {
+					JOptionPane.showMessageDialog(null, "Por favor ingrese todos los datos.");
 				} else {
-					JOptionPane.showMessageDialog(null, "Usuario no encontrado, intente de nuevo.");
+					String contrasena = new String(contrasenaChars);
+					if (usuarioNoEncontrado(nombreUsuario, contrasena)) {
+						accesoSiguientePestaña(nombreUsuario, contrasena);
+
+						// Limpiar los campos después de un acceso exitoso
+						vInicioSesion.getPnUsuario().getTxtNombreUsuario().setText("");
+						vInicioSesion.getPnUsuario().getTxtContrasena().setText("");
+
+						vInicioSesion.setVisible(false);
+						vMenuPrincipal.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Usuario no encontrado, intente de nuevo.");
+					}
 				}
 			} catch (UsuarioNoEncontradoException usexc1) {
 				JOptionPane.showMessageDialog(null, usexc1.getMessage());
+			} catch (Exception e1) {
+				// Manejar otras excepciones de manera adecuada
+				JOptionPane.showMessageDialog(null, "Ocurrió un error. Por favor, inténtelo de nuevo.");
 			}
+
 		} else if (comando.equals("REGISTRAR USUARIO")) {
 			vInicioSesion.setVisible(false);
 			vRegistro.add(vRegistro.getPnUsuario());
@@ -362,14 +375,18 @@ public class Controller implements ActionListener {
 			String nombreUsuario = vRegistro.getPnUsuario().getTxtNombreUsuario().getText().toString();
 			@SuppressWarnings("deprecation")
 			String contrasena = vRegistro.getPnUsuario().getTxtContrasena().getText().toString();
-			usDao.crearUsuario(nombreUsuario, contrasena);
-			JOptionPane.showMessageDialog(null, "Usuario credado con exito, Bienvenido!");
-			vRegistro.getPnUsuario().getTxtNombreUsuario().setText("");
-			vRegistro.getPnUsuario().getTxtContrasena().setText("");
-			vRegistro.setVisible(false);
-			vRegistro.remove(vRegistro.getPnUsuario());
-			vInicioSesion.setVisible(false);
-			vMenuPrincipal.setVisible(true);
+			if (nombreUsuario.contentEquals("") || contrasena.contentEquals("")) {
+				JOptionPane.showMessageDialog(null, "Por favor ingrese todos los datos.");
+			} else {
+				usDao.crearUsuario(nombreUsuario, contrasena);
+				JOptionPane.showMessageDialog(null, "Usuario credado con exito, Bienvenido!");
+				vRegistro.getPnUsuario().getTxtNombreUsuario().setText("");
+				vRegistro.getPnUsuario().getTxtContrasena().setText("");
+				vRegistro.setVisible(false);
+				vRegistro.remove(vRegistro.getPnUsuario());
+				vInicioSesion.setVisible(false);
+				vMenuPrincipal.setVisible(true);
+			}
 		} else if (comando.equals("SALIR REGISTRO")) {
 			vRegistro.remove(vRegistro.getPnUsuario());
 			vRegistro.setVisible(false);
@@ -388,25 +405,18 @@ public class Controller implements ActionListener {
 			vCfgCasa.repaint();
 			vCfgCasa.setVisible(true);
 		} else if (comando.equals("CONFIGURAR CASA APUESTAS")) {
-			String nombreCasa = vCfgCasa.getPnCfCasa().getTxtNombreCasaApuestas().getText().trim();
-			String sedesText = vCfgCasa.getPnCfCasa().getTxtNumeroSedes().getText().trim();
-			String presupuestoText = vCfgCasa.getPnCfCasa().getTxtPresupuestoTotal().getText().trim();
+			String nombreCasa = vCfgCasa.getPnCfCasa().getTxtNombreCasaApuestas().getText().toString();
+			int numeroSedes = Integer.parseInt(vCfgCasa.getPnCfCasa().getTxtNumeroSedes().getText().trim());
+			double presupuestoTotal = Double
+					.parseDouble(vCfgCasa.getPnCfCasa().getTxtPresupuestoTotal().getText().trim());
 
-			if (nombreCasa.isEmpty() || sedesText.isEmpty() || presupuestoText.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "¡Complete todos los campos antes de configurar!");
-				return; // Sale del método si algún campo está vacío
-			}
-
-			int numeroSedes = Integer.parseInt(sedesText);
-			double presupuestoTotal = Double.parseDouble(presupuestoText);
-
-			// Crear un objeto ConfiguracionDTO
+			// Create a ConfiguracionDTO object with the gathered data
 			ConfiguracionDTO nuevaConfiguracion = new ConfiguracionDTO();
 			nuevaConfiguracion.setNombreCasa(nombreCasa);
 			nuevaConfiguracion.setNumeroSedes(numeroSedes);
 			nuevaConfiguracion.setPresupuestoTotal(presupuestoTotal);
 
-			// Guardar la configuración
+			// Use the ConfiguracionDAO to save the configuration
 			cfDao.guardarConfiguracion(nuevaConfiguracion);
 
 			// Mostrar mensaje de éxito y limpiar campos
@@ -415,6 +425,10 @@ public class Controller implements ActionListener {
 			vCfgCasa.getPnCfCasa().getTxtNumeroSedes().setText("");
 			vCfgCasa.getPnCfCasa().getTxtPresupuestoTotal().setText("");
 			vCfgCasa.setVisible(false);
+			vCfgCasa.remove(vCfgCasa.getPnCfCasa());
+			vConfiguracion.add(vConfiguracion.getP1());
+			vConfiguracion.getP1().setVisible(true);
+			vConfiguracion.repaint();
 			vConfiguracion.setVisible(true);
 
 		} else if (comando.equals("SALIR CONFIGURACIONCASA")) {
@@ -441,10 +455,36 @@ public class Controller implements ActionListener {
 			String nombreJuego = vCfgJuegos.getPnCfgJuegos().getNombreJuego().getSelectedItem().toString();
 			String tipoJuego = vCfgJuegos.getPnCfgJuegos().getTipoJuego().getSelectedItem().toString();
 			double presupuestoJuego = Double
-					.parseDouble(vCfgJuegos.getPnCfgJuegos().getTxtPresupuesto().getText().toString());
-			int id = juegoDao.getListaJuegos().size();
-			juegoDao.crearJuego(id, nombreJuego, tipoJuego, presupuestoJuego);
+					.parseDouble(vCfgJuegos.getPnCfgJuegos().getTxtPresupuesto().getText().trim());
+			int id = -1;
+			if (juegoDao.getListaJuegos().size() == 0) {
+				id = 1;
+			} else {
+				ArrayList<Integer> lst = new ArrayList<Integer>();
+				for (int i = 0; i < juegoDao.getListaJuegos().size(); i++) {
 
+					lst.add(juegoDao.getListaJuegos().get(i).getIdJuego());
+				}
+				for (int i = 0; i < juegoDao.getListaJuegos().size(); i++) {
+					if (!lst.contains(i + 1)) {
+						id = i + 1;
+					}
+				}
+				if (id == -1) {
+					id = juegoDao.getListaJuegos().size() + 1;
+				}
+			}
+			try {
+				juegoDao.crearJuego(id, nombreJuego, tipoJuego, presupuestoJuego);
+			} catch (PresupuestoExcedidoException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error de Presupuesto", JOptionPane.ERROR_MESSAGE);
+			}
+			vCfgJuegos.setVisible(false);
+			vCfgJuegos.remove(vCfgJuegos.getPnCfgJuegos());
+			vConfiguracion.add(vConfiguracion.getP1());
+			vConfiguracion.getP1().setVisible(true);
+			vConfiguracion.repaint();
+			vConfiguracion.setVisible(true);
 		} else if (comando.equals("SALIR CONFG")) {
 			vConfiguracion.remove(vConfiguracion.getP1());
 			vConfiguracion.getP1().setVisible(false);
@@ -648,11 +688,10 @@ public class Controller implements ActionListener {
 		} else if (comando.equals("SALIR APOSTADOR")) {
 			vMenuApostador.remove(vMenuApostador.getP11());
 			vMenuApostador.getP11().setVisible(false);
-			vMenuApostador.setVisible(false); // Oculta la ventana de configuración de la casa de apuestas
-			vMenuPrincipal.add(vMenuPrincipal.getP5()); // Añade el panel principal de configuración
-			vMenuPrincipal.getP5().setVisible(true); // Asegura que el panel principal sea visible
-			vMenuPrincipal.repaint();
-			vMenuPrincipal.setVisible(true); // M
+			vMenuApostador.setVisible(false);
+			vMenuPrincipal.add(vMenuPrincipal.getP5());
+			vMenuPrincipal.getP5().setVisible(true);
+			vMenuPrincipal.setVisible(true);
 		} else if (comando.equals("AGREGARAPOSTADOR")) {
 			try {
 				String nombre = vAgApostador.getPnAgApostador().getTxtNombre().getText().toString();
@@ -1910,26 +1949,31 @@ public class Controller implements ActionListener {
 				JOptionPane.showMessageDialog(null, "No existe ninguna apuesta con ese index.");
 			} else {
 				buscarIndex = buscar;
-				vActBetplay.getPnActBetplay().getTxtValorApuesta()
-						.setText(betDao.search(Integer.parseInt(buscarIndex)).getValorApuesta() + "");
-				opc2 = 1;
-				vMenBetplay.setVisible(false);
-				vMenBetplay.remove(vMenBetplay.getP27());
-				vMenBetplay.getP27().setVisible(false);
-				vActBetplay.getPnActBetplay().addSedeChangeListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e4) {
-						String sedeSeleccionada = e4.getActionCommand();
-						List<Long> cedulas = obtenerCedulasPorSede(sedeSeleccionada);
-						vActBetplay.getPnActBetplay().actualizarCedulas(cedulas);
-					}
-				});
-				vActBetplay.add(vActBetplay.getPnActBetplay());
-				vActBetplay.getPnActBetplay().setVisible(true);
-				vActBetplay.repaint();
-				vActBetplay.setVisible(true);
+				BetplayDTO bet = betDao.search(Integer.parseInt(buscarIndex));
+				if (bet == null) {
+					JOptionPane.showMessageDialog(null, "No se encontró ninguna apuesta con ese índice.");
+				} else {
+					vActBetplay.getPnActBetplay().getTxtValorApuesta().setText(bet.getValorApuesta() + "");
+					opc2 = 1;
+					vMenBetplay.setVisible(false);
+					vMenBetplay.remove(vMenBetplay.getP27());
+					vMenBetplay.getP27().setVisible(false);
+					vActBetplay.getPnActBetplay().addSedeChangeListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e4) {
+							String sedeSeleccionada = e4.getActionCommand();
+							List<Long> cedulas = obtenerCedulasPorSede(sedeSeleccionada);
+							vActBetplay.getPnActBetplay().actualizarCedulas(cedulas);
+						}
+					});
+					vActBetplay.add(vActBetplay.getPnActBetplay());
+					vActBetplay.getPnActBetplay().setVisible(true);
+					vActBetplay.repaint();
+					vActBetplay.setVisible(true);
+				}
 			}
 			buscarIndex = buscar;
+         
 		} else if (comando.equals("ACTUALAPBETPLAY")) {
 			if (buscarIndex == null) {
 				JOptionPane.showMessageDialog(null, "Index no encontrado");
@@ -1966,7 +2010,7 @@ public class Controller implements ActionListener {
 								sede, partido, resultado, valorApuesta.toString());
 
 						if (actualizado) {
-							vAgBetplay.getPnAgBetplay().mostrarRecibo(dia, sede, cedulaApostador, partido, resultado,
+							vActBetplay.getPnActBetplay().mostrarRecibo(dia, sede, cedulaApostador, partido, resultado,
 									valorApuesta, index);
 							JOptionPane.showMessageDialog(null, "Apuesta Betplay actualizada con éxito!");
 							vActBetplay.getPnActBetplay().getTxtValorApuesta().setText("");
@@ -2017,8 +2061,8 @@ public class Controller implements ActionListener {
 					aux.add(apBetplay.get(i));
 				}
 			}
-			TablaApBetplay tablaApBet = new TablaApBetplay(aux);
-			JTable tablitaApBet = tablaApBet.agregarBetplay();
+			TablaApBetplay tablaBet = new TablaApBetplay(aux);
+			JTable tablitaBet = tablaBet.agregarBetplay();
 		} else if (comando.equals("SALIR APBETPLAY")) {
 			vMenBetplay.remove(vMenBetplay.getP27());
 			vMenBetplay.getP27().setVisible(false);
@@ -2275,8 +2319,8 @@ public class Controller implements ActionListener {
 		}
 		return numeros;
 	}
-	
-	public void checkNumber(String number) throws NumeroNegativoException{
+
+	public void checkNumber(String number) throws NumeroNegativoException {
 		if (Integer.parseInt(number) < 0) {
 			throw new NumeroNegativoException(number);
 		}
