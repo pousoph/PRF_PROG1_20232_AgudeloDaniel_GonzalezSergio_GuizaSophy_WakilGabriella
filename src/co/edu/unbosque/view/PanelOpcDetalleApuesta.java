@@ -8,9 +8,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel que contiene un botón para realizar la búsqueda de detalles de una
+ * apuesta.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelOpcDetalleApuesta extends JPanel {
 
 	private JButton btn1;
+
+	/**
+	 * Constructor de la clase PanelOpcDetalleApuesta. Configura el diseño del panel
+	 * y agrega un botón con la funcionalidad de buscar detalles de apuestas.
+	 */
 
 	public PanelOpcDetalleApuesta() {
 		btn1 = new JButton("Buscar");
@@ -26,9 +39,21 @@ public class PanelOpcDetalleApuesta extends JPanel {
 		add(btn1);
 	}
 
+	/**
+	 * Obtiene el botón del panel.
+	 *
+	 * @return JButton que representa el botón del panel.
+	 */
+
 	public JButton getBtn1() {
 		return btn1;
 	}
+
+	/**
+	 * Establece el botón del panel.
+	 *
+	 * @param btn1 Nuevo JButton que se establecerá como el botón del panel.
+	 */
 
 	public void setBtn1(JButton btn1) {
 		this.btn1 = btn1;

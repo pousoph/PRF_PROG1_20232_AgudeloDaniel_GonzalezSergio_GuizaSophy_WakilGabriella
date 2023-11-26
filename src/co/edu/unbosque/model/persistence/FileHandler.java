@@ -22,10 +22,11 @@ import co.edu.unbosque.model.SuperAstroDTO;
 import co.edu.unbosque.model.UsuarioDTO;
 
 /**
- * @author AgudeloDaniel, GonzalezSergio, GuizaSophy, WakilGabriella
  * 
- *         La clase FileHandler proporciona métodos para leer y escribir
- *         archivos de texto y archivos serializados.
+ * La clase FileHandler proporciona métodos para leer y escribir archivos de
+ * texto y archivos serializados.
+ * 
+ * @author AgudeloDaniel, GonzalezSergio, GuizaSophy, WakilGabriella 25-11-23
  */
 
 public class FileHandler {

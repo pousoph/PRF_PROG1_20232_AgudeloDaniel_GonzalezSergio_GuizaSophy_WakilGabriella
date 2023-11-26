@@ -13,6 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Panel de configuración de juegos que permite ingresar información como el
+ * nombre, tipo y presupuesto del juego.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelCfgJuegos extends JPanel {
 	private JLabel lblnombreJuego, lblTipoJuego, lblPresupuesto;
 	private JTextField txtPresupuesto;
@@ -22,6 +30,10 @@ public class PanelCfgJuegos extends JPanel {
 
 	// Define el tamaño de fuente deseado
 	private static final int TAMANO_FUENTE = 16;
+
+	/**
+	 * Constructor que inicializa el panel de configuración de juegos.
+	 */
 
 	public PanelCfgJuegos() {
 		// TODO Auto-generated constructor stub
@@ -90,41 +102,101 @@ public class PanelCfgJuegos extends JPanel {
 		backgroundImage = new ImageIcon("./imgs/inicioSesion.png").getImage();
 	}
 
+	/**
+	 * Obtiene la etiqueta del presupuesto del juego.
+	 *
+	 * @return La etiqueta del presupuesto del juego.
+	 */
+
 	public JLabel getLblPresupuesto() {
 		return lblPresupuesto;
 	}
+
+	/**
+	 * Establece la etiqueta del presupuesto del juego.
+	 *
+	 * @param lblPresupuesto La nueva etiqueta del presupuesto del juego.
+	 */
 
 	public void setLblPresupuesto(JLabel lblPresupuesto) {
 		this.lblPresupuesto = lblPresupuesto;
 	}
 
+	/**
+	 * Obtiene el campo de texto del presupuesto del juego.
+	 *
+	 * @return El campo de texto del presupuesto del juego.
+	 */
+
 	public JTextField getTxtPresupuesto() {
 		return txtPresupuesto;
 	}
+
+	/**
+	 * Establece el campo de texto del presupuesto del juego.
+	 *
+	 * @param txtPresupuesto El nuevo campo de texto del presupuesto del juego.
+	 */
 
 	public void setTxtPresupuesto(JTextField txtPresupuesto) {
 		this.txtPresupuesto = txtPresupuesto;
 	}
 
+	/**
+	 * Obtiene el ComboBox del nombre del juego.
+	 *
+	 * @return El ComboBox del nombre del juego.
+	 */
+
 	public JComboBox<String> getNombreJuego() {
 		return nombreJuego;
 	}
+
+	/**
+	 * Establece el ComboBox del nombre del juego.
+	 *
+	 * @param nombreJuego El nuevo ComboBox del nombre del juego.
+	 */
 
 	public void setNombreJuego(JComboBox<String> nombreJuego) {
 		this.nombreJuego = nombreJuego;
 	}
 
+	/**
+	 * Obtiene el ComboBox del tipo de juego.
+	 *
+	 * @return El ComboBox del tipo de juego.
+	 */
+
 	public JComboBox<String> getTipoJuego() {
 		return tipoJuego;
 	}
+
+	/**
+	 * Establece el ComboBox del tipo de juego.
+	 *
+	 * @param tipoJuego El nuevo ComboBox del tipo de juego.
+	 */
 
 	public void setTipoJuego(JComboBox<String> tipoJuego) {
 		this.tipoJuego = tipoJuego;
 	}
 
+	/**
+	 * Obtiene la imagen de fondo del panel.
+	 *
+	 * @return La imagen de fondo del panel.
+	 */
+
 	public Image getBackgroundImage() {
 		return backgroundImage;
 	}
+
+	/**
+	 * Establece la imagen de fondo del panel.
+	 *
+	 * @param backgroundImage La nueva imagen de fondo del panel.
+	 */
 
 	public void setBackgroundImage(Image backgroundImage) {
 		this.backgroundImage = backgroundImage;

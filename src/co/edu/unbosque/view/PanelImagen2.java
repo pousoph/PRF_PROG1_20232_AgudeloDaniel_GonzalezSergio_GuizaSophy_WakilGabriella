@@ -9,9 +9,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel que muestra una imagen redimensionada.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelImagen2 extends JPanel {
 
 	private BufferedImage img2;
+
+	/**
+	 * Constructor que carga una imagen desde un archivo.
+	 */
 
 	public PanelImagen2() {
 		// TODO Auto-generated constructor stub
@@ -21,6 +32,14 @@ public class PanelImagen2 extends JPanel {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Sobrescribe el método paintComponent para dibujar la imagen redimensionada en
+	 * el panel.
+	 *
+	 * @param g El contexto de gráficos en el que se dibujará la imagen
+	 *          redimensionada.
+	 */
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

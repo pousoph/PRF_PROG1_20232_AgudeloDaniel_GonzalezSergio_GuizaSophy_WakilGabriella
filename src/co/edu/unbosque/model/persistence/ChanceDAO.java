@@ -4,21 +4,31 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 import co.edu.unbosque.model.ChanceDTO;
 
 /**
- * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
  * 
  *         La clase ChanceDAO implementa las operaciones CRUD para gestionar
  *         juegos de Chance.
+ *         
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
  */
 
 public class ChanceDAO implements CRUDOperation {
 
+	// Lista que almacena objetos de tipo ChanceDTO
 	private ArrayList<ChanceDTO> apChance;
+
+	// Nombre del archivo para serialización de datos
 	private final String SERIAL_FILENAME = "apuestas-chance.dat";
+
+	// Índice utilizado en el procesamiento de datos
 	int index = 0;
+
+	/**
+	 * Constructor de la clase ChanceDAO. Inicializa la lista de juegos de Chance y
+	 * carga datos desde la serialización si está disponible.
+	 */
 
 	public ChanceDAO() {
 		// TODO Auto-generated constructor stub
@@ -31,9 +41,20 @@ public class ChanceDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Guarda los datos de la lista de juegos de Chance en un archivo serializado.
+	 */
+
 	public void writeSerializable() {
 		FileHandler.openAndWriteFileChance(SERIAL_FILENAME, apChance);
 	}
+
+	/**
+	 * Crea un nuevo juego de Chance a partir de datos proporcionados en forma de
+	 * cadenas.
+	 *
+	 * @param strs Arreglo de cadenas con los datos del juego de Chance.
+	 */
 
 	@Override
 	public void create(String... strs) {
@@ -57,6 +78,12 @@ public class ChanceDAO implements CRUDOperation {
 
 	}
 
+	/**
+	 * Crea un nuevo juego de Chance a partir de un objeto.
+	 *
+	 * @param obj Objeto ChanceDTO que representa el juego de Chance.
+	 */
+
 	@Override
 	public void create(Object obj) {
 		// TODO Auto-generated method stub
@@ -65,6 +92,12 @@ public class ChanceDAO implements CRUDOperation {
 		writeSerializable();
 
 	}
+
+	/**
+	 * Obtiene una representación en forma de cadena de todos los juegos de Chance.
+	 *
+	 * @return Cadena con la información de los juegos de Chance.
+	 */
 
 	@Override
 	public String readAll() {
@@ -79,6 +112,14 @@ public class ChanceDAO implements CRUDOperation {
 		return sb.toString();
 	}
 
+	/**
+	 * Busca la existencia de una apuesta de Chance por su identificador.
+	 *
+	 * @param index Identificador de la apuesta de Chance a buscar.
+	 * @return true si se encuentra la apuesta de Chance con el identificador dado,
+	 *         false en caso contrario.
+	 */
+
 	public boolean searchById(int index) {
 		boolean salida = false;
 		for (int i = 0; i < apChance.size(); i++) {
@@ -88,6 +129,14 @@ public class ChanceDAO implements CRUDOperation {
 		}
 		return salida;
 	}
+
+	/**
+	 * Busca y retorna una apuesta de Chance por su identificador.
+	 *
+	 * @param index Identificador de la apuesta de Chance a buscar.
+	 * @return Objeto ChanceDTO si se encuentra la apuesta de Chance con el
+	 *         identificador dado, null en caso contrario.
+	 */
 
 	public ChanceDTO search(int index) {
 		ChanceDTO salida = null;
@@ -99,6 +148,14 @@ public class ChanceDAO implements CRUDOperation {
 		}
 		return salida;
 	}
+
+	/**
+	 * Actualiza los datos de un juego de Chance en la lista por su índice.
+	 *
+	 * @param index   Índice del juego de Chance a actualizar.
+	 * @param newData Nuevos datos del juego de Chance en forma de cadenas.
+	 * @return true si se actualizó correctamente, false en caso contrario.
+	 */
 
 	@Override
 	public boolean updateByIndex(int index, String... newData) {
@@ -124,6 +181,13 @@ public class ChanceDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un juego de Chance de la lista por su índice.
+	 *
+	 * @param index Índice del juego de Chance a eliminar.
+	 * @return true si se eliminó correctamente, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(int index) {
 		// TODO Auto-generated method stub
@@ -138,6 +202,13 @@ public class ChanceDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un juego de Chance de la lista por su objeto.
+	 *
+	 * @param obj Objeto ChanceDTO que representa el juego de Chance a eliminar.
+	 * @return true si se eliminó correctamente, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(Object obj) {
 		// TODO Auto-generated method stub
@@ -151,6 +222,13 @@ public class ChanceDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Calcula el valor total apostado por un cliente en apuestas de Chance.
+	 *
+	 * @param cedulaApostador Número de cédula del apostador.
+	 * @return Valor total apostado por el cliente en apuestas de Chance.
+	 */
+
 	public double calcularValorTotalApostadoPorCliente(long cedulaApostador) {
 		double valorTotal = 0;
 		for (ChanceDTO chance : apChance) {
@@ -160,6 +238,14 @@ public class ChanceDAO implements CRUDOperation {
 		}
 		return valorTotal;
 	}
+
+	/**
+	 * Calcula el valor total apostado en apuestas de Chance por una sede
+	 * específica.
+	 *
+	 * @param sede Nombre de la sede.
+	 * @return Valor total apostado en apuestas de Chance por la sede.
+	 */
 
 	public double calcularTotalApuestasPorSede(String sede) {
 		double total = 0;
@@ -171,6 +257,12 @@ public class ChanceDAO implements CRUDOperation {
 		return total;
 	}
 
+	/**
+	 * Calcula el valor total apostado en todas las apuestas de Chance.
+	 *
+	 * @return Valor total apostado en todas las apuestas de Chance.
+	 */
+
 	public double calcularTotalValorApostado() {
 		double total = 0;
 		for (ChanceDTO chance : apChance) {
@@ -178,6 +270,14 @@ public class ChanceDAO implements CRUDOperation {
 		}
 		return total;
 	}
+
+	/**
+	 * Obtiene el detalle de las apuestas realizadas por un cliente en apuestas de
+	 * Chance.
+	 *
+	 * @param cedulaApostador Número de cédula del apostador.
+	 * @return Detalle de las apuestas del cliente en apuestas de Chance.
+	 */
 
 	public String obtenerDetalleApuestasPorCedula(long cedulaApostador) {
 
@@ -204,28 +304,60 @@ public class ChanceDAO implements CRUDOperation {
 
 		return detalleBuilder.toString();
 	}
-	
+
+	/**
+	 * Obtiene el detalle de las apuestas realizadas en apuestas de Chance por una
+	 * sede específica.
+	 *
+	 * @param nombreSede Nombre de la sede.
+	 * @return Detalle de las apuestas realizadas en apuestas de Chance por la sede.
+	 */
+
 	public String obtenerDetalleApuestasPorSede(String nombreSede) {
-        StringBuilder detalle = new StringBuilder();
-        for (ChanceDTO chance : apChance) {
-            if (chance.getSedeApostador().equalsIgnoreCase(nombreSede)) {
-                detalle.append(chance.toString()).append("\n");
-            }
-        }
-        return detalle.toString();
-    }
+		StringBuilder detalle = new StringBuilder();
+		for (ChanceDTO chance : apChance) {
+			if (chance.getSedeApostador().equalsIgnoreCase(nombreSede)) {
+				detalle.append(chance.toString()).append("\n");
+			}
+		}
+		return detalle.toString();
+	}
+
+	/**
+	 * Obtiene la lista de apuestas de Chance.
+	 *
+	 * @return Lista de apuestas de Chance.
+	 */
 
 	public ArrayList<ChanceDTO> getApChance() {
 		return apChance;
 	}
 
+	/**
+	 * Establece la lista de apuestas de Chance.
+	 *
+	 * @param apChance Nueva lista de apuestas de Chance.
+	 */
+
 	public void setApChance(ArrayList<ChanceDTO> apChance) {
 		this.apChance = apChance;
 	}
 
+	/**
+	 * Obtiene el índice actual.
+	 *
+	 * @return Índice actual.
+	 */
+
 	public int getIndex() {
 		return index;
 	}
+
+	/**
+	 * Establece el índice actual.
+	 *
+	 * @param index Nuevo índice.
+	 */
 
 	public void setIndex(int index) {
 		this.index = index;

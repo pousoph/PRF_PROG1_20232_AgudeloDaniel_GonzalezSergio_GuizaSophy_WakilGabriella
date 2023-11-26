@@ -14,11 +14,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Panel de configuración para una casa de apuestas que permite ingresar
+ * información como el nombre, número de sedes y presupuesto total.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelConfiguracionCasAp extends JPanel {
 
 	private JLabel lblNombreCasaApuestas, lblNumeroSedes, lblPresupuestoTotal;
 	private JTextField txtNombreCasaApuestas, txtNumeroSedes, txtPresupuestoTotal;
 	private Image backgroundImage;
+
+	/**
+	 * Constructor que inicializa el panel de configuración de la casa de apuestas.
+	 */
 
 	public PanelConfiguracionCasAp() {
 		setLayout(new GridBagLayout());
@@ -65,6 +77,12 @@ public class PanelConfiguracionCasAp extends JPanel {
 
 	}
 
+	/**
+	 * Sobrescribe el método paintComponent para dibujar la imagen de fondo.
+	 *
+	 * @param g El objeto Graphics utilizado para dibujar.
+	 */
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -73,57 +91,146 @@ public class PanelConfiguracionCasAp extends JPanel {
 		}
 	}
 
+	/**
+	 * Obtiene la etiqueta que indica el nombre de la casa de apuestas.
+	 *
+	 * @return La etiqueta del nombre de la casa de apuestas.
+	 */
+
 	public JLabel getLblNombreCasaApuestas() {
 		return lblNombreCasaApuestas;
 	}
+
+	/**
+	 * Establece la etiqueta que indica el nombre de la casa de apuestas.
+	 *
+	 * @param lblNombreCasaApuestas La etiqueta del nombre de la casa de apuestas.
+	 */
 
 	public void setLblNombreCasaApuestas(JLabel lblNombreCasaApuestas) {
 		this.lblNombreCasaApuestas = lblNombreCasaApuestas;
 	}
 
+	/**
+	 * Obtiene la etiqueta que indica el número de sedes de la casa de apuestas.
+	 *
+	 * @return La etiqueta del número de sedes.
+	 */
+
 	public JLabel getLblNumeroSedes() {
 		return lblNumeroSedes;
 	}
+
+	/**
+	 * Establece la etiqueta que indica el número de sedes de la casa de apuestas.
+	 *
+	 * @param lblNumeroSedes La etiqueta del número de sedes.
+	 */
 
 	public void setLblNumeroSedes(JLabel lblNumeroSedes) {
 		this.lblNumeroSedes = lblNumeroSedes;
 	}
 
+	/**
+	 * Obtiene la etiqueta que indica el presupuesto total de la casa de apuestas.
+	 *
+	 * @return La etiqueta del presupuesto total.
+	 */
+
 	public JLabel getLblPresupuestoTotal() {
 		return lblPresupuestoTotal;
 	}
+
+	/**
+	 * Establece la etiqueta que indica el presupuesto total de la casa de apuestas.
+	 *
+	 * @param lblPresupuestoTotal La etiqueta del presupuesto total.
+	 */
 
 	public void setLblPresupuestoTotal(JLabel lblPresupuestoTotal) {
 		this.lblPresupuestoTotal = lblPresupuestoTotal;
 	}
 
+	/**
+	 * Obtiene el campo de texto para ingresar el nombre de la casa de apuestas.
+	 *
+	 * @return El campo de texto del nombre de la casa de apuestas.
+	 */
+
 	public JTextField getTxtNombreCasaApuestas() {
 		return txtNombreCasaApuestas;
 	}
+
+	/**
+	 * Establece el campo de texto para ingresar el nombre de la casa de apuestas.
+	 *
+	 * @param txtNombreCasaApuestas El campo de texto del nombre de la casa de
+	 *                              apuestas.
+	 */
 
 	public void setTxtNombreCasaApuestas(JTextField txtNombreCasaApuestas) {
 		this.txtNombreCasaApuestas = txtNombreCasaApuestas;
 	}
 
+	/**
+	 * Obtiene el campo de texto para ingresar el número de sedes de la casa de
+	 * apuestas.
+	 *
+	 * @return El campo de texto del número de sedes.
+	 */
+
 	public JTextField getTxtNumeroSedes() {
 		return txtNumeroSedes;
 	}
+
+	/**
+	 * Establece el campo de texto para ingresar el número de sedes de la casa de
+	 * apuestas.
+	 *
+	 * @param txtNumeroSedes El campo de texto del número de sedes.
+	 */
 
 	public void setTxtNumeroSedes(JTextField txtNumeroSedes) {
 		this.txtNumeroSedes = txtNumeroSedes;
 	}
 
+	/**
+	 * Obtiene el campo de texto para ingresar el presupuesto total de la casa de
+	 * apuestas.
+	 *
+	 * @return El campo de texto del presupuesto total.
+	 */
+
 	public JTextField getTxtPresupuestoTotal() {
 		return txtPresupuestoTotal;
 	}
+
+	/**
+	 * Establece el campo de texto para ingresar el presupuesto total de la casa de
+	 * apuestas.
+	 *
+	 * @param txtPresupuestoTotal El campo de texto del presupuesto total.
+	 */
 
 	public void setTxtPresupuestoTotal(JTextField txtPresupuestoTotal) {
 		this.txtPresupuestoTotal = txtPresupuestoTotal;
 	}
 
+	/**
+	 * Obtiene la imagen de fondo del panel.
+	 *
+	 * @return La imagen de fondo.
+	 */
+
 	public Image getBackgroundImage() {
 		return backgroundImage;
 	}
+
+	/**
+	 * Establece la imagen de fondo del panel.
+	 *
+	 * @param backgroundImage La imagen de fondo.
+	 */
 
 	public void setBackgroundImage(Image backgroundImage) {
 		this.backgroundImage = backgroundImage;

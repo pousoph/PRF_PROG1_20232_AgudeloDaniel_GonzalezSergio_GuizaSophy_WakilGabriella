@@ -9,6 +9,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel que muestra una imagen redimensionada.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelImagenes extends JPanel {
 
 	private BufferedImage img1;

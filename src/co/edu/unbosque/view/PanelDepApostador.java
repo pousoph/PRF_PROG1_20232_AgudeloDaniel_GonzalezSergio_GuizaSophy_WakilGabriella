@@ -10,10 +10,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel dedicado a la gestión de apostadores, que incluye un JComboBox para
+ * seleccionar opciones de filtrado.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelDepApostador extends JPanel {
 
 	private JComboBox<String> opcionesfil;
 	private Image backImage;
+
+	/**
+	 * Constructor que inicializa el panel de gestión de apostadores con un
+	 * JComboBox y una imagen de fondo.
+	 */
 
 	public PanelDepApostador() {
 		// TODO Auto-generated constructor stub
@@ -59,17 +72,41 @@ public class PanelDepApostador extends JPanel {
 		}
 	}
 
+	/**
+	 * Obtiene el JComboBox utilizado para seleccionar opciones de filtrado.
+	 *
+	 * @return El JComboBox de opciones de filtrado.
+	 */
+
 	public JComboBox<String> getOpcionesfil() {
 		return opcionesfil;
 	}
+
+	/**
+	 * Establece el JComboBox utilizado para seleccionar opciones de filtrado.
+	 *
+	 * @param opcionesfil El JComboBox de opciones de filtrado.
+	 */
 
 	public void setOpcionesfil(JComboBox<String> opcionesfil) {
 		this.opcionesfil = opcionesfil;
 	}
 
+	/**
+	 * Obtiene la imagen de fondo del panel.
+	 *
+	 * @return La imagen de fondo.
+	 */
+
 	public Image getBackImage() {
 		return backImage;
 	}
+
+	/**
+	 * Establece la imagen de fondo del panel.
+	 *
+	 * @param backImage La imagen de fondo.
+	 */
 
 	public void setBackImage(Image backImage) {
 		this.backImage = backImage;

@@ -5,7 +5,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import co.edu.unbosque.model.BalotoDTO;
 import co.edu.unbosque.model.SuperAstroDTO;
+
+/**
+ * 
+ * Clase SuperAstroDAO que implementa la interfaz CRUDOperation y se encarga de
+ * administrar los datos de SuperAstroDTO.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
 
 public class SuperAstroDAO implements CRUDOperation {
 
@@ -13,6 +22,11 @@ public class SuperAstroDAO implements CRUDOperation {
 	private final String SERIAL_FILENAME = "apuestas-superastro.dat";
 	int index = 0;
 	String exit = "";
+
+	/**
+	 * Constructor de la clase SuperAstroDAO. Inicializa la lista de SuperAstroDTO y
+	 * carga los datos desde un archivo serializado si existe.
+	 */
 
 	public SuperAstroDAO() {
 		// TODO Auto-generated constructor stub
@@ -25,9 +39,23 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Escribe los datos de SuperAstroDTO en un archivo serializado.
+	 */
+
 	public void writeSerializable() {
 		FileHandler.openAndWriteFileSuperAstro(SERIAL_FILENAME, apSuperAstro);
 	}
+
+	/**
+	 * Crea un nuevo objeto SuperAstroDTO a partir de los parámetros proporcionados
+	 * y lo agrega a la lista de juegos Super Astro.
+	 *
+	 * @param strs Un arreglo de cadenas que contiene los datos del nuevo juego
+	 *             Super Astro en el siguiente orden: [0] - ID [1] - Nombre del
+	 *             juego [2] - Tipo de juego [3] - Presupuesto [4] - Números [5] -
+	 *             Signo Zodiacal
+	 */
 
 	@Override
 	public void create(String... strs) {
@@ -51,6 +79,12 @@ public class SuperAstroDAO implements CRUDOperation {
 
 	}
 
+	/**
+	 * Agrega un objeto SuperAstroDTO a la lista de juegos Super Astro.
+	 *
+	 * @param obj El objeto SuperAstroDTO que se va a agregar a la lista.
+	 */
+
 	@Override
 	public void create(Object obj) {
 		// TODO Auto-generated method stub
@@ -59,16 +93,31 @@ public class SuperAstroDAO implements CRUDOperation {
 
 	}
 
+	/**
+	 * Busca una apuesta de SuperAstro por su identificador.
+	 *
+	 * @param index Identificador de la apuesta de SuperAstro a buscar.
+	 * @return La apuesta de SuperAstro encontrada o null si no se encuentra.
+	 */
+
 	public SuperAstroDTO search(int index) {
 		SuperAstroDTO salida = null;
 		for (int i = 0; i < apSuperAstro.size(); i++) {
 			if (apSuperAstro.get(i).getIdSuperAstro() == index
-					&& apSuperAstro.get(i).getClass().getSimpleName().toString().equals("SuperaAstro")) {
+					&& apSuperAstro.get(i).getClass().getSimpleName().toString().equals("SuperAstroDTO")) {
 				salida = ((SuperAstroDTO) apSuperAstro.get(i));
 			}
 		}
 		return salida;
 	}
+
+	/**
+	 * Verifica si existe una apuesta de SuperAstro con el identificador
+	 * especificado.
+	 *
+	 * @param index Identificador de la apuesta de SuperAstro a verificar.
+	 * @return true si la apuesta de SuperAstro existe, false en caso contrario.
+	 */
 
 	public boolean searchById(int index) {
 		boolean salida = false;
@@ -80,6 +129,14 @@ public class SuperAstroDAO implements CRUDOperation {
 		return salida;
 	}
 
+	/**
+	 * Obtiene una representación en forma de cadena de todos los juegos Super Astro
+	 * en la lista.
+	 *
+	 * @return Una cadena que contiene la representación de todos los juegos Super
+	 *         Astro en la lista.
+	 */
+
 	@Override
 	public String readAll() {
 		// TODO Auto-generated method stub
@@ -89,6 +146,19 @@ public class SuperAstroDAO implements CRUDOperation {
 		});
 		return sb.toString();
 	}
+
+	/**
+	 * Actualiza los datos de un juego Super Astro en la lista por su ID.
+	 *
+	 * @param index   El ID del juego Super Astro que se va a actualizar.
+	 * @param newData Un arreglo de cadenas que contiene los nuevos datos del juego
+	 *                Super Astro en el siguiente orden: [0] - Nuevo nombre del
+	 *                juego [1] - Nuevo tipo de juego [2] - Nuevos números
+	 *                (separados por "; ") [3] - Nuevo presupuesto [4] - Nuevo signo
+	 *                Zodiacal
+	 * @return true si la actualización se realiza con éxito, false si no se
+	 *         encuentra un juego con el ID proporcionado.
+	 */
 
 	@Override
 	public boolean updateByIndex(int index, String... newData) {
@@ -102,7 +172,7 @@ public class SuperAstroDAO implements CRUDOperation {
 				String[] numerosStr = newData[3].split(",");
 				int[] numeros = new int[numerosStr.length];
 				for (int j = 0; j < numerosStr.length; j++) {
-					numeros[j] = Integer.parseInt(numerosStr[i]);
+					numeros[j] = Integer.parseInt(numerosStr[j]);
 				}
 				apSuperAstro.get(i).setNumeros(numeros);
 				apSuperAstro.get(i).setSignoZodiacal(newData[4]);
@@ -114,6 +184,14 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 		return false;
 	}
+
+	/**
+	 * Elimina un juego Super Astro de la lista por su ID.
+	 *
+	 * @param index El ID del juego Super Astro que se va a eliminar.
+	 * @return true si la eliminación se realiza con éxito, false si no se encuentra
+	 *         un juego con el ID proporcionado.
+	 */
 
 	@Override
 	public boolean delete(int index) {
@@ -129,6 +207,14 @@ public class SuperAstroDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un juego Super Astro de la lista por objeto.
+	 *
+	 * @param obj El objeto SuperAstroDTO que se va a eliminar de la lista.
+	 * @return true si la eliminación se realiza con éxito, false si el objeto no se
+	 *         encuentra en la lista.
+	 */
+
 	@Override
 	public boolean delete(Object obj) {
 		// TODO Auto-generated method stub
@@ -142,11 +228,27 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Muestra un recibo de apuestas de SuperAstro para un apostador con la cédula
+	 * especificada.
+	 *
+	 * @param apuestasSuper Lista de apuestas de SuperAstro.
+	 * @param cedula        Cédula del apostador.
+	 */
+
 	public void mostrarReciboPorCedula(List<SuperAstroDTO> apuestasSuper, long cedula) {
 		System.out.println("Recibo de apuestas Baloto para la cédula " + cedula + ":");
 		mostrarApuestasPorCedula(apuestasSuper, cedula);
 		System.out.println("------------------------");
 	}
+
+	/**
+	 * Muestra las apuestas de SuperAstro para un apostador con la cédula
+	 * especificada.
+	 *
+	 * @param apuestasSuper Lista de apuestas de SuperAstro.
+	 * @param cedula        Cédula del apostador.
+	 */
 
 	private void mostrarApuestasPorCedula(List<SuperAstroDTO> apuestasSuper, long cedula) {
 		boolean hayApuestas = false;
@@ -163,6 +265,13 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Calcula el valor total apostado por un cliente con la cédula especificada.
+	 *
+	 * @param cedulaApostador Cédula del apostador.
+	 * @return Valor total apostado por el cliente.
+	 */
+
 	public double calcularValorTotalApostadoPorCliente(long cedulaApostador) {
 		double valorTotal = 0;
 		for (SuperAstroDTO sAstro : apSuperAstro) {
@@ -172,6 +281,13 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 		return valorTotal;
 	}
+
+	/**
+	 * Calcula el total de apuestas realizadas en una sede específica.
+	 *
+	 * @param sede Nombre de la sede.
+	 * @return Total de apuestas realizadas en la sede.
+	 */
 
 	public double calcularTotalApuestasPorSede(String sede) {
 		double total = 0;
@@ -183,6 +299,12 @@ public class SuperAstroDAO implements CRUDOperation {
 		return total;
 	}
 
+	/**
+	 * Calcula el valor total de todas las apuestas realizadas.
+	 *
+	 * @return Valor total de todas las apuestas.
+	 */
+
 	public double calcularTotalValorApostado() {
 		double total = 0;
 		for (SuperAstroDTO sAstro : apSuperAstro) {
@@ -190,6 +312,14 @@ public class SuperAstroDAO implements CRUDOperation {
 		}
 		return total;
 	}
+
+	/**
+	 * Obtiene el detalle de las apuestas realizadas por un cliente con la cédula
+	 * especificada.
+	 *
+	 * @param cedulaApostador Cédula del apostador.
+	 * @return Detalle de las apuestas realizadas por el cliente.
+	 */
 
 	public String obtenerDetalleApuestasPorCedula(long cedulaApostador) {
 		// Obtener las apuestas por la cédula del apostador utilizando tus funciones de
@@ -224,6 +354,13 @@ public class SuperAstroDAO implements CRUDOperation {
 		return detalleBuilder.toString();
 	}
 
+	/**
+	 * Obtiene el detalle de las apuestas realizadas en una sede específica.
+	 *
+	 * @param nombreSede Nombre de la sede.
+	 * @return Detalle de las apuestas realizadas en la sede.
+	 */
+
 	public String obtenerDetalleApuestasPorSede(String nombreSede) {
 		StringBuilder detalle = new StringBuilder();
 		for (SuperAstroDTO superastro : apSuperAstro) {
@@ -234,29 +371,75 @@ public class SuperAstroDAO implements CRUDOperation {
 		return detalle.toString();
 	}
 
+	public boolean buscarPorId(int idBaloto) {
+		return apSuperAstro.stream().anyMatch(apuesta -> apuesta.getIdSuperAstro() == idBaloto);
+	}
+
+	/**
+	 * Obtiene la lista de apuestas de SuperAstro.
+	 *
+	 * @return La lista de apuestas de SuperAstro.
+	 */
+
 	public ArrayList<SuperAstroDTO> getApSuperAstro() {
 		return apSuperAstro;
 	}
+
+	/**
+	 * Establece la lista de apuestas de SuperAstro.
+	 *
+	 * @param apSuperAstro La nueva lista de apuestas de SuperAstro.
+	 */
 
 	public void setApSuperAstro(ArrayList<SuperAstroDTO> apSuperAstro) {
 		this.apSuperAstro = apSuperAstro;
 	}
 
+	/**
+	 * Obtiene el índice actual.
+	 *
+	 * @return El índice actual.
+	 */
+
 	public int getIndex() {
 		return index;
 	}
+
+	/**
+	 * Establece el índice actual.
+	 *
+	 * @param index El índice actual a establecer.
+	 */
 
 	public void setIndex(int index) {
 		this.index = index;
 	}
 
+	/**
+	 * Obtiene la marca de salida.
+	 *
+	 * @return La marca de salida.
+	 */
+
 	public String getExit() {
 		return exit;
 	}
 
+	/**
+	 * Establece la marca de salida.
+	 *
+	 * @param exit La nueva marca de salida.
+	 */
+
 	public void setExit(String exit) {
 		this.exit = exit;
 	}
+
+	/**
+	 * Obtiene el nombre del archivo serializado.
+	 *
+	 * @return El nombre del archivo serializado.
+	 */
 
 	public String getSERIAL_FILENAME() {
 		return SERIAL_FILENAME;

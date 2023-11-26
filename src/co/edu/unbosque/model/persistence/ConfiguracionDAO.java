@@ -9,14 +9,24 @@ import java.util.Properties;
 
 import co.edu.unbosque.model.ConfiguracionDTO;
 
+/**
+ * 
+ *         La clase ConfiguracionDAO se encarga de gestionar la carga y
+ *         almacenamiento de la configuración del sistema en un archivo de
+ *         propiedades.
+ *         
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class ConfiguracionDAO {
-	
+
 	private final String CONFIG_FILE = "confi.properties";
 	private ConfiguracionDTO configuracion; // Agregamos el atributo
-	
-	public ConfiguracionDAO() {
-		cargarConfiguracion();
-	}
+
+	/**
+	 * Carga la configuración del sistema desde un archivo de propiedades. Si ocurre
+	 * algún error durante la carga, se lanza una excepción.
+	 */
 
 	public void cargarConfiguracion() {
         Properties properties = new Properties();
@@ -34,6 +44,17 @@ public class ConfiguracionDAO {
         }
     }
 
+	public ConfiguracionDAO() {
+		cargarConfiguracion();
+	}
+	/**
+	 * Guarda la configuración del sistema en un archivo de propiedades. Si ocurre
+	 * algún error durante el almacenamiento, se imprime la traza del error.
+	 *
+	 * @param configuracionDTO Objeto ConfiguracionDTO que contiene la configuración
+	 *                         a guardar.
+	 */
+
 	public void guardarConfiguracion(ConfiguracionDTO configuracionDTO) {
 		Properties properties = new Properties();
 
@@ -49,10 +70,24 @@ public class ConfiguracionDAO {
 		}
 	}
 
+	/**
+	 * Obtiene la configuración del sistema.
+	 *
+	 * @return Objeto ConfiguracionDTO que contiene la configuración actual del
+	 *         sistema.
+	 */
+
 	// Agregamos un método para obtener la configuración
 	public ConfiguracionDTO getConfiguracion() {
 		return configuracion;
 	}
+
+	/**
+	 * Establece la configuración del sistema.
+	 *
+	 * @param configuracion Objeto ConfiguracionDTO que contiene la nueva
+	 *                      configuración del sistema.
+	 */
 
 	// Agregamos un método para establecer la configuración
 	public void setConfiguracion(ConfiguracionDTO configuracion) {

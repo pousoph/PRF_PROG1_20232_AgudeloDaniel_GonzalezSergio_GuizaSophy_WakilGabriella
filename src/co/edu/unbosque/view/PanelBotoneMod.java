@@ -8,9 +8,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel personalizado que contiene botones para la modificación de datos.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
 public class PanelBotoneMod extends JPanel {
 
 	private JButton btn1, btn2;
+
+	/**
+	 * Constructor que inicializa y configura los botones de modificación y salida.
+	 */
 
 	public PanelBotoneMod() {
 		// TODO Auto-generated constructor stub
@@ -39,17 +49,41 @@ public class PanelBotoneMod extends JPanel {
 		add(btn2);
 	}
 
+	/**
+	 * Obtiene el primer botón de modificación.
+	 *
+	 * @return Botón de modificación.
+	 */
+
 	public JButton getBtn1() {
 		return btn1;
 	}
+
+	/**
+	 * Establece el primer botón de modificación.
+	 *
+	 * @param btn1 Botón de modificación a establecer.
+	 */
 
 	public void setBtn1(JButton btn1) {
 		this.btn1 = btn1;
 	}
 
+	/**
+	 * Obtiene el segundo botón de salida.
+	 *
+	 * @return Botón de salida.
+	 */
+
 	public JButton getBtn2() {
 		return btn2;
 	}
+
+	/**
+	 * Establece el segundo botón de salida.
+	 *
+	 * @param btn2 Botón de salida a establecer.
+	 */
 
 	public void setBtn2(JButton btn2) {
 		this.btn2 = btn2;

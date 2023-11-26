@@ -5,15 +5,24 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.model.BetplayDTO;
 
+/**
+ * Clase que representa un DAO (Data Access Object) para gestionar operaciones relacionadas con BetplayDTO.
+ */
 public class BetplayDAO implements CRUDOperation {
 
+	// Lista que almacena objetos BetplayDTO
 	private ArrayList<BetplayDTO> apBetplay;
+	// Nombre del archivo serializado
 	private final String SERIAL_FILENAME = "apuestas-betplay.dat";
-	int index = 0;
-	String exit = "";
+	// Índice para operaciones específicas
+	private int index = 0;
+	// Variable de salida para operaciones específicas
+	private String exit = "";
 
+	/**
+	 * Constructor de la clase BetplayDAO. Inicializa la lista y carga datos desde el archivo serializado si existe.
+	 */
 	public BetplayDAO() {
-		// TODO Auto-generated constructor stub
 		apBetplay = new ArrayList<BetplayDTO>();
 		if (FileHandler.openAndReadFileBetplay(SERIAL_FILENAME) != null) {
 			@SuppressWarnings("unchecked")
@@ -24,10 +33,20 @@ public class BetplayDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Método para escribir la lista serializada en el archivo.
+	 */
 	public void writeSerializable() {
 		FileHandler.openAndWriteFileBetplay(SERIAL_FILENAME, apBetplay);
 	}
 
+	/**
+	 * Crea un nuevo objeto BetplayDTO y lo agrega a la lista.
+	 *
+	 * @param strs Arreglo de cadenas con la información del nuevo objeto
+	 *             BetplayDTO.
+	 */
+	
 	@Override
 	public void create(String... strs) {
 		// TODO Auto-generated method stub
@@ -42,7 +61,11 @@ public class BetplayDAO implements CRUDOperation {
 		apBetplay.add(nBetplay);
 		writeSerializable();
 	}
-
+	/**
+	 * Crea un nuevo objeto BetplayDTO y lo agrega a la lista.
+	 *
+	 * @param obj Objeto BetplayDTO a agregar.
+	 */
 	@Override
 	public void create(Object obj) {
 		// TODO Auto-generated method stub
@@ -50,7 +73,11 @@ public class BetplayDAO implements CRUDOperation {
 		apBetplay.add((BetplayDTO) obj);
 		writeSerializable();
 	}
-
+	/**
+	 * Devuelve una cadena con la representación de todos los objetos BetplayDTO.
+	 *
+	 * @return Cadena con la representación de todos los objetos BetplayDTO.
+	 */
 	@Override
 	public String readAll() {
 		// TODO Auto-generated method stub
@@ -60,6 +87,13 @@ public class BetplayDAO implements CRUDOperation {
 		});
 		return sb.toString();
 	}
+
+	/**
+	 * Busca una apuesta de Betplay por su identificador.
+	 *
+	 * @param index Identificador de la apuesta de Betplay a buscar.
+	 * @return Objeto BetplayDTO si se encuentra, null de lo contrario.
+	 */
 
 	public BetplayDTO search(int index) {
 		BetplayDTO salida = null;
@@ -72,6 +106,13 @@ public class BetplayDAO implements CRUDOperation {
 		return salida;
 	}
 
+	/**
+	 * Verifica si existe una apuesta de Betplay con un identificador específico.
+	 *
+	 * @param index Identificador de la apuesta de Betplay a buscar.
+	 * @return true si la apuesta existe, false de lo contrario.
+	 */
+
 	public boolean searchById(int index) {
 		boolean salida = false;
 		for (int i = 0; i < apBetplay.size(); i++) {
@@ -81,6 +122,14 @@ public class BetplayDAO implements CRUDOperation {
 		}
 		return salida;
 	}
+
+	/**
+	 * Actualiza la información de un objeto BetplayDTO dado su índice.
+	 *
+	 * @param index   Índice del objeto BetplayDTO a actualizar.
+	 * @param newData Nueva información del objeto BetplayDTO.
+	 * @return True si la actualización fue exitosa, false en caso contrario.
+	 */
 
 	@Override
 	public boolean updateByIndex(int index, String... newData) {
@@ -101,6 +150,13 @@ public class BetplayDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un objeto BetplayDTO dado su índice.
+	 *
+	 * @param index Índice del objeto BetplayDTO a eliminar.
+	 * @return True si la eliminación fue exitosa, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(int index) {
 		// TODO Auto-generated method stub
@@ -115,6 +171,13 @@ public class BetplayDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un objeto BetplayDTO dado el objeto BetplayDTO.
+	 *
+	 * @param obj El objeto BetplayDTO a eliminar.
+	 * @return True si la eliminación fue exitosa, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(Object obj) {
 		// TODO Auto-generated method stub
@@ -128,6 +191,14 @@ public class BetplayDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Calcula el valor total apostado por un cliente en todas las apuestas de
+	 * Betplay.
+	 *
+	 * @param cedulaApostador Cédula del apostador.
+	 * @return Valor total apostado por el cliente en todas las apuestas de Betplay.
+	 */
+
 	public double calcularValorTotalApostadoPorCliente(long cedulaApostador) {
 		double valorTotal = 0;
 		for (BetplayDTO betplay : apBetplay) {
@@ -137,6 +208,15 @@ public class BetplayDAO implements CRUDOperation {
 		}
 		return valorTotal;
 	}
+
+	/**
+	 * Calcula el valor total apostado en todas las apuestas de Betplay para una
+	 * sede específica.
+	 *
+	 * @param sede Nombre de la sede.
+	 * @return Valor total apostado en todas las apuestas de Betplay para la sede
+	 *         específica.
+	 */
 
 	public double calcularTotalApuestasPorSede(String sede) {
 		double total = 0;
@@ -148,6 +228,12 @@ public class BetplayDAO implements CRUDOperation {
 		return total;
 	}
 
+	/**
+	 * Calcula el valor total apostado en todas las apuestas de Betplay.
+	 *
+	 * @return Valor total apostado en todas las apuestas de Betplay.
+	 */
+
 	public double calcularTotalValorApostado() {
 		double total = 0;
 		for (BetplayDTO betplay : apBetplay) {
@@ -155,6 +241,14 @@ public class BetplayDAO implements CRUDOperation {
 		}
 		return total;
 	}
+
+	/**
+	 * Obtiene un detalle de las apuestas de Betplay realizadas por un apostador
+	 * según su cédula.
+	 *
+	 * @param cedulaApostador Cédula del apostador.
+	 * @return Detalle de las apuestas de Betplay realizadas por el apostador.
+	 */
 
 	public String obtenerDetalleApuestasPorCedula(long cedulaApostador) {
 
@@ -183,6 +277,14 @@ public class BetplayDAO implements CRUDOperation {
 		return detalleBuilder.toString();
 	}
 
+	/**
+	 * Obtiene un detalle de las apuestas de Betplay realizadas en una sede
+	 * específica.
+	 *
+	 * @param nombreSede Nombre de la sede.
+	 * @return Detalle de las apuestas de Betplay realizadas en la sede específica.
+	 */
+
 	public String obtenerDetalleApuestasPorSede(String nombreSede) {
 		StringBuilder detalle = new StringBuilder();
 		for (BetplayDTO betplay : apBetplay) {
@@ -193,29 +295,71 @@ public class BetplayDAO implements CRUDOperation {
 		return detalle.toString();
 	}
 
+	/**
+	 * Obtiene la lista de apuestas de Betplay.
+	 *
+	 * @return Lista de apuestas de Betplay.
+	 */
+
 	public ArrayList<BetplayDTO> getApBetplay() {
 		return apBetplay;
 	}
+
+	/**
+	 * Establece la lista de apuestas de Betplay.
+	 *
+	 * @param apBetplay Lista de apuestas de Betplay a establecer.
+	 */
 
 	public void setApBetplay(ArrayList<BetplayDTO> apBetplay) {
 		this.apBetplay = apBetplay;
 	}
 
+	/**
+	 * Obtiene el índice actual.
+	 *
+	 * @return Índice actual.
+	 */
+
 	public int getIndex() {
 		return index;
 	}
+
+	/**
+	 * Establece el índice actual.
+	 *
+	 * @param index Índice a establecer.
+	 */
 
 	public void setIndex(int index) {
 		this.index = index;
 	}
 
+	/**
+	 * Obtiene la cadena de salida.
+	 *
+	 * @return Cadena de salida.
+	 */
+
 	public String getExit() {
 		return exit;
 	}
 
+	/**
+	 * Establece la cadena de salida.
+	 *
+	 * @param exit Cadena de salida a establecer.
+	 */
+
 	public void setExit(String exit) {
 		this.exit = exit;
 	}
+
+	/**
+	 * Obtiene el nombre del archivo serializado.
+	 *
+	 * @return Nombre del archivo serializado.
+	 */
 
 	public String getSERIAL_FILENAME() {
 		return SERIAL_FILENAME;

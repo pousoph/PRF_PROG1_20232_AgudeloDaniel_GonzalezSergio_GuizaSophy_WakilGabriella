@@ -8,9 +8,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel que contiene botones para realizar operaciones relacionadas con la
+ * agregación de Betplay.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelOpcAgBetplay extends JPanel {
 
 	private JButton btn1, btn2;
+
+	/**
+	 * Constructor de la clase PanelOpcAgBetplay. Configura el diseño del panel y
+	 * agrega botones con funcionalidades específicas para la agregación de Betplay.
+	 */
 
 	public PanelOpcAgBetplay() {
 		btn1 = new JButton("Agregar");
@@ -38,17 +51,41 @@ public class PanelOpcAgBetplay extends JPanel {
 		add(btn2);
 	}
 
+	/**
+	 * Obtiene el primer botón del panel.
+	 *
+	 * @return JButton que representa el primer botón del panel.
+	 */
+
 	public JButton getBtn1() {
 		return btn1;
 	}
+
+	/**
+	 * Establece el primer botón del panel.
+	 *
+	 * @param btn1 Nuevo JButton que se establecerá como el primer botón del panel.
+	 */
 
 	public void setBtn1(JButton btn1) {
 		this.btn1 = btn1;
 	}
 
+	/**
+	 * Obtiene el segundo botón del panel.
+	 *
+	 * @return JButton que representa el segundo botón del panel.
+	 */
+
 	public JButton getBtn2() {
 		return btn2;
 	}
+
+	/**
+	 * Establece el segundo botón del panel.
+	 *
+	 * @param btn2 Nuevo JButton que se establecerá como el segundo botón del panel.
+	 */
 
 	public void setBtn2(JButton btn2) {
 		this.btn2 = btn2;

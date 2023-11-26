@@ -11,11 +11,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PnMenuLoteria extends JPanel{
-	
+/**
+ * 
+ * Panel de menú para la gestión de loterías.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
+public class PnMenuLoteria extends JPanel {
+
 	private JButton btn1, btn2, btn3, btn4, btn5;
 	private Image img1;
-	
+
+	/**
+	 * Crea un nuevo panel de menú para la gestión de loterías.
+	 */
+
 	public PnMenuLoteria() {
 		setLayout(new GridBagLayout()); // Usar un layout de cuadrícula para centrar los componentes verticalmente
 
@@ -50,6 +61,16 @@ public class PnMenuLoteria extends JPanel{
 		btn5 = createButton("Salir", "SALIR APLOTERIA", "./imgs/button_salir.png");
 		add(btn5, gbc);
 	}
+
+	/**
+	 * Crea un nuevo botón con las propiedades específicas.
+	 *
+	 * @param text          Texto que se muestra en el botón.
+	 * @param actionCommand Comando de acción asociado al botón.
+	 * @param imagePath     Ruta de la imagen utilizada como ícono del botón.
+	 * @return Nuevo JButton configurado con las propiedades especificadas.
+	 */
+
 	private JButton createButton(String text, String actionCommand, String imagePath) {
 		JButton button = new JButton(text);
 		button.setActionCommand(actionCommand);
@@ -64,6 +85,12 @@ public class PnMenuLoteria extends JPanel{
 		return button;
 	}
 
+	/**
+	 * Sobrescribe el método paintComponent para dibujar una imagen de fondo.
+	 *
+	 * @param g Objeto Graphics utilizado para dibujar.
+	 */
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -71,41 +98,125 @@ public class PnMenuLoteria extends JPanel{
 			g.drawImage(img1, 0, 0, getWidth(), getHeight(), this);
 		}
 	}
+
+	/**
+	 * Obtiene el primer botón del menú.
+	 *
+	 * @return El primer botón del menú.
+	 */
+
 	public JButton getBtn1() {
 		return btn1;
 	}
+
+	/**
+	 * Establece el primer botón del menú.
+	 *
+	 * @param btn1 Nuevo botón a establecer.
+	 */
+
 	public void setBtn1(JButton btn1) {
 		this.btn1 = btn1;
 	}
+
+	/**
+	 * Obtiene el segundo botón del menú.
+	 *
+	 * @return El segundo botón del menú.
+	 */
+
 	public JButton getBtn2() {
 		return btn2;
 	}
+
+	/**
+	 * Establece el segundo botón del menú.
+	 *
+	 * @param btn2 Nuevo botón a establecer.
+	 */
+
 	public void setBtn2(JButton btn2) {
 		this.btn2 = btn2;
 	}
+
+	/**
+	 * Obtiene el tercer botón del menú.
+	 *
+	 * @return El tercer botón del menú.
+	 */
+
 	public JButton getBtn3() {
 		return btn3;
 	}
+
+	/**
+	 * Establece el tercer botón del menú.
+	 *
+	 * @param btn3 Nuevo botón a establecer.
+	 */
+
 	public void setBtn3(JButton btn3) {
 		this.btn3 = btn3;
 	}
+
+	/**
+	 * Obtiene el cuarto botón del menú.
+	 *
+	 * @return El cuarto botón del menú.
+	 */
+
 	public JButton getBtn4() {
 		return btn4;
 	}
+
+	/**
+	 * Establece el cuarto botón del menú.
+	 *
+	 * @param btn4 Nuevo botón a establecer.
+	 */
+
 	public void setBtn4(JButton btn4) {
 		this.btn4 = btn4;
 	}
+
+	/**
+	 * Obtiene el quinto botón del menú.
+	 *
+	 * @return El quinto botón del menú.
+	 */
+
 	public JButton getBtn5() {
 		return btn5;
 	}
+
+	/**
+	 * Establece el quinto botón del menú.
+	 *
+	 * @param btn5 Nuevo botón a establecer.
+	 */
+
 	public void setBtn5(JButton btn5) {
 		this.btn5 = btn5;
 	}
+
+	/**
+	 * Obtiene la imagen de fondo del menú.
+	 *
+	 * @return La imagen de fondo del menú.
+	 */
+
 	public Image getImg1() {
 		return img1;
 	}
+
+	/**
+	 * Establece la imagen de fondo del menú.
+	 *
+	 * @param img1 Nueva imagen de fondo a establecer.
+	 */
+
 	public void setImg1(Image img1) {
 		this.img1 = img1;
 	}
-	
+
 }

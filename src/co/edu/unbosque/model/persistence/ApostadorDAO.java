@@ -6,11 +6,31 @@ import java.util.stream.Collectors;
 
 import co.edu.unbosque.model.ApostadorDTO;
 
+/**
+ * 
+ *         Clase que implementa la interfaz CRUDOperation para la gestión de
+ *         apostadores. Utiliza un ArrayList para almacenar los objetos
+ *         ApostadorDTO y proporciona métodos para realizar operaciones CRUD
+ *         (Crear, Leer, Actualizar, Eliminar).
+ *
+ *         <p>
+ *         La clase también utiliza la clase FileHandler para la manipulación de
+ *         archivos serializables.
+ *         </p>
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class ApostadorDAO implements CRUDOperation {
 
 	private ArrayList<ApostadorDTO> apostadores;
 	private final String SERIAL_FILENAME = "apostadores.dat";
 	int index = 0;
+
+	/**
+	 * Constructor que inicializa la lista de apostadores. Si hay datos
+	 * serializables previos, los carga; de lo contrario, crea una lista vacía.
+	 */
 
 	public ApostadorDAO() {
 		apostadores = new ArrayList<ApostadorDTO>();
@@ -22,9 +42,21 @@ public class ApostadorDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Método para escribir la lista de apostadores en un archivo serializable.
+	 */
+
 	public void writeSerializable() {
 		FileHandler.openAndWriteFileApostador(SERIAL_FILENAME, apostadores);
 	}
+
+	/**
+	 * Implementación del método de creación de la interfaz CRUDOperation. Crea un
+	 * nuevo objeto ApostadorDTO con los datos proporcionados y lo agrega a la
+	 * lista.
+	 *
+	 * @param strs Arreglo de strings con los datos del apostador.
+	 */
 
 	@Override
 	public void create(String... strs) {
@@ -41,6 +73,17 @@ public class ApostadorDAO implements CRUDOperation {
 		writeSerializable();
 
 	}
+
+	/**
+	 * Realiza la depuración de la lista de apostadores según el criterio
+	 * especificado.
+	 * 
+	 * @param ops El criterio de depuración (1 para nombre, 2 para cédula, 3 para
+	 *            sede).
+	 * @param bus El valor a utilizar como filtro de depuración.
+	 * @return Una cadena con la representación de los apostadores que cumplen con
+	 *         el criterio de depuración.
+	 */
 
 	public String depurar(int ops, Object bus) {
 		String salida = "";
@@ -78,6 +121,14 @@ public class ApostadorDAO implements CRUDOperation {
 		return salida;
 	}
 
+	/**
+	 * Verifica si existe un apostador con el ID proporcionado.
+	 * 
+	 * @param index El ID a buscar.
+	 * @return true si se encuentra un apostador con el ID especificado, false en
+	 *         caso contrario.
+	 */
+
 	public boolean searchById(int index) {
 		boolean salida = false;
 		for (int i = 0; i < apostadores.size(); i++) {
@@ -87,6 +138,14 @@ public class ApostadorDAO implements CRUDOperation {
 		}
 		return salida;
 	}
+
+	/**
+	 * Busca un apostador por su ID.
+	 * 
+	 * @param index El ID del apostador a buscar.
+	 * @return El objeto ApostadorDTO correspondiente al ID proporcionado, o null si
+	 *         no se encuentra.
+	 */
 
 	public ApostadorDTO search(int index) {
 		ApostadorDTO salida = null;
@@ -99,6 +158,12 @@ public class ApostadorDAO implements CRUDOperation {
 		return salida;
 	}
 
+	/**
+	 * Crea un nuevo apostador a partir de un objeto y lo agrega a la lista.
+	 *
+	 * @param obj El objeto ApostadorDTO a agregar.
+	 */
+
 	@Override
 	public void create(Object obj) {
 		// TODO Auto-generated method stub
@@ -106,6 +171,12 @@ public class ApostadorDAO implements CRUDOperation {
 		writeSerializable();
 
 	}
+
+	/**
+	 * Devuelve una cadena con la representación de todos los apostadores.
+	 *
+	 * @return Cadena con la representación de todos los apostadores.
+	 */
 
 	@Override
 	public String readAll() {
@@ -116,21 +187,42 @@ public class ApostadorDAO implements CRUDOperation {
 		return sb.toString();
 	}
 
+	/**
+	 * Obtiene la lista de cédulas de apostadores para una sede específica.
+	 *
+	 * @param sede La sede para la cual se desea obtener las cédulas.
+	 * @return Lista de cédulas de los apostadores en la sede especificada.
+	 */
+
 	public List<Long> getCedulasPorSede(String sede) {
 		List<ApostadorDTO> apostadoresEnSede = apostadores.stream()
 				.filter(apostador -> apostador.getSede().equalsIgnoreCase(sede)).collect(Collectors.toList());
 
 		return apostadoresEnSede.stream().map(ApostadorDTO::getCedula).collect(Collectors.toList());
 	}
-	
-	public List<ApostadorDTO> getApostadoresPorSede(String sede) {
-	    // Filtrar la lista de apostadores por la sede proporcionada
-	    List<ApostadorDTO> apostadoresEnSede = apostadores.stream()
-	            .filter(apostador -> apostador.getSede().equalsIgnoreCase(sede))
-	            .collect(Collectors.toList());
 
-	    return apostadoresEnSede;
+	/**
+	 * Obtiene la lista de apostadores para una sede específica.
+	 *
+	 * @param sede La sede para la cual se desea obtener la lista de apostadores.
+	 * @return Lista de apostadores en la sede especificada.
+	 */
+
+	public List<ApostadorDTO> getApostadoresPorSede(String sede) {
+		// Filtrar la lista de apostadores por la sede proporcionada
+		List<ApostadorDTO> apostadoresEnSede = apostadores.stream()
+				.filter(apostador -> apostador.getSede().equalsIgnoreCase(sede)).collect(Collectors.toList());
+
+		return apostadoresEnSede;
 	}
+
+	/**
+	 * Actualiza la información de un apostador dado su índice.
+	 *
+	 * @param index   Índice del apostador a actualizar.
+	 * @param newData Nueva información del apostador.
+	 * @return True si la actualización fue exitosa, false en caso contrario.
+	 */
 
 	@Override
 	public boolean updateByIndex(int index, String... newData) {
@@ -150,6 +242,13 @@ public class ApostadorDAO implements CRUDOperation {
 		return true;
 	}
 
+	/**
+	 * Elimina un apostador dado su índice.
+	 *
+	 * @param index Índice del apostador a eliminar.
+	 * @return True si la eliminación fue exitosa, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(int index) {
 		for (int i = 0; i < apostadores.size(); i++) {
@@ -163,6 +262,13 @@ public class ApostadorDAO implements CRUDOperation {
 		return false;
 	}
 
+	/**
+	 * Elimina un apostador dado el objeto ApostadorDTO.
+	 *
+	 * @param obj El objeto ApostadorDTO a eliminar.
+	 * @return True si la eliminación fue exitosa, false en caso contrario.
+	 */
+
 	@Override
 	public boolean delete(Object obj) {
 		ApostadorDTO toDelete = ((ApostadorDTO) obj);
@@ -175,9 +281,21 @@ public class ApostadorDAO implements CRUDOperation {
 		}
 	}
 
+	/**
+	 * Obtiene la lista de apostadores.
+	 *
+	 * @return La lista de apostadores.
+	 */
+
 	public ArrayList<ApostadorDTO> getApostadores() {
 		return apostadores;
 	}
+
+	/**
+	 * Establece la lista de apostadores.
+	 *
+	 * @param apostadores La lista de apostadores a establecer.
+	 */
 
 	public void setApostadores(ArrayList<ApostadorDTO> apostadores) {
 		this.apostadores = apostadores;

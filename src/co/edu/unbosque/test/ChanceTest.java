@@ -13,20 +13,63 @@ import org.junit.Test;
 import co.edu.unbosque.model.ChanceDTO;
 import co.edu.unbosque.model.persistence.ChanceDAO;
 
+/**
+ * 
+ * Clase de pruebas unitarias para la funcionalidad relacionada con Chance.
+ * Utiliza la biblioteca JUnit para realizar las pruebas.
+ *
+ * <p>
+ * Esta clase prueba las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) de
+ * la clase ChanceDAO.
+ * </p>
+ *
+ * <p>
+ * Se utilizan métodos anotados con {@code @BeforeClass}, {@code @Before},
+ * {@code @Test}, {@code @After}, y {@code @AfterClass} para indicar la
+ * secuencia de ejecución de las pruebas y realizar acciones antes y después de
+ * las mismas.
+ * </p>
+ *
+ * <p>
+ * La prueba incluye la creación de un objeto ChanceDTO, su inserción en
+ * ChanceDAO, y la verificación del tamaño de la lista resultante.
+ * </p>
+ *
+ * <p>
+ * La salida de las pruebas se imprime en la consola.
+ * </p>
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ *
+ */
+
 public class ChanceTest {
 
 	private ChanceDAO chance = new ChanceDAO();
 	static int numeroDePrueba = 2;
+
+	/**
+	 * Método ejecutado antes de todas las pruebas.
+	 */
 
 	@BeforeClass
 	public static void antesDeTodo() {
 		System.out.println("Iniciando las pruebas unitarias del chance");
 	}
 
+	/**
+	 * Método ejecutado antes de cada prueba.
+	 */
+
 	@Before
 	public void antesDeCadaPrueba() {
 		System.out.println("Empezando la prueba " + numeroDePrueba);
 	}
+
+	/**
+	 * Prueba unitaria para la creación de un objeto Chance y su inserción en
+	 * ChanceDAO.
+	 */
 
 	@Test
 	public void testeandoCrear() {
@@ -48,12 +91,20 @@ public class ChanceTest {
 		assertTrue(size == 2);
 	}
 
+	/**
+	 * Método ejecutado después de cada prueba.
+	 */
+
 	@After
 	public void despuesDeCadaPrueba() {
 		System.out.println("Finalizando la prueba" + numeroDePrueba);
 		numeroDePrueba++;
 
 	}
+
+	/**
+	 * Método ejecutado después de todas las pruebas.
+	 */
 
 	@AfterClass
 	public static void despuesDeTodo() {

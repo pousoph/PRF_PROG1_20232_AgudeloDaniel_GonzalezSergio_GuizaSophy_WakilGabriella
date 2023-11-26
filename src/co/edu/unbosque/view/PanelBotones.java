@@ -8,9 +8,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Panel personalizado que contiene un botón para ingresar.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelBotones extends JPanel {
 
 	private JButton btn;
+
+	/**
+	 * Constructor que inicializa y configura el botón de ingresar.
+	 */
 
 	public PanelBotones() {
 		// TODO Auto-generated constructor stub
@@ -28,9 +39,21 @@ public class PanelBotones extends JPanel {
 
 	}
 
+	/**
+	 * Obtiene el botón de ingresar.
+	 *
+	 * @return Botón de ingresar.
+	 */
+
 	public JButton getBtn() {
 		return btn;
 	}
+
+	/**
+	 * Establece el botón de ingresar.
+	 *
+	 * @param btn Botón de ingresar a establecer.
+	 */
 
 	public void setBtn(JButton btn) {
 		this.btn = btn;

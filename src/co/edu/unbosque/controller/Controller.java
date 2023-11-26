@@ -79,6 +79,13 @@ import co.edu.unbosque.view.VentanaValorTotalAoxCliente;
 import co.edu.unbosque.view.VentanaModSede;
 import co.edu.unbosque.view.VentanaRegistroU;
 
+/**
+ * Obtiene las cédulas de los apostadores asociados a una sede específica.
+ *
+ * @param sede La sede de la cual se obtendrán las cédulas.
+ * @return Lista de cédulas de los apostadores en la sede.
+ */
+
 public class Controller implements ActionListener {
 
 	private Console con;
@@ -132,6 +139,10 @@ public class Controller implements ActionListener {
 	private VentanaListadoxSede vListadoxSede;
 	private VentanaMenuApRealizada vMenApRealizada;
 	private VentanaValorTotalAoxCliente vTotalApxCliente;
+
+	/**
+	 * Constructor de la clase Controller.
+	 */
 
 	public Controller() {
 		// TODO Auto-generated constructor stub
@@ -192,6 +203,9 @@ public class Controller implements ActionListener {
 		Asignar();
 	}
 
+	/**
+	 * Asigna los listeners a los botones correspondientes en las diferentes vistas.
+	 */
 	public void Asignar() {
 
 		mw.getP2().getBtn().addActionListener((ActionListener) this);
@@ -322,6 +336,13 @@ public class Controller implements ActionListener {
 		pnAgBaloto.getComboBoxSede().addActionListener((ActionListener) this);
 
 	}
+
+	/**
+	 * Maneja los eventos de acción generados por los componentes de la interfaz
+	 * gráfica.
+	 *
+	 * @param e El evento de acción.
+	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1715,12 +1736,12 @@ public class Controller implements ActionListener {
 					"indice-actualizar");
 			if (noLetras(buscar) == false) {
 				JOptionPane.showMessageDialog(null, "El indice no puede incluir letras.");
-			} else if (balDao.buscarPorId(Integer.parseInt(buscar)) == false) {
+			} else if (sAstroDao.buscarPorId(Integer.parseInt(buscar)) == false) {
 				JOptionPane.showMessageDialog(null, "No existe ninguna apuesta con ese index.");
 			} else {
 				buscarIndex = buscar;
 				vActSuperAstro.getPnActSuperAstro().getTxtValorApuesta()
-						.setText(chanDao.search(Integer.parseInt(buscarIndex)).getValorApuesta() + "");
+						.setText(sAstroDao.search(Integer.parseInt(buscarIndex)).getValorApuesta() + "");
 				opc2 = 1;
 				vMenSuperAstro.setVisible(false);
 				vMenSuperAstro.remove(vMenSuperAstro.getP24());
@@ -1973,7 +1994,7 @@ public class Controller implements ActionListener {
 				}
 			}
 			buscarIndex = buscar;
-         
+
 		} else if (comando.equals("ACTUALAPBETPLAY")) {
 			if (buscarIndex == null) {
 				JOptionPane.showMessageDialog(null, "Index no encontrado");
@@ -2234,6 +2255,13 @@ public class Controller implements ActionListener {
 		}
 	}
 
+	/**
+	 * Obtiene las cédulas de los apostadores asociados a una sede específica.
+	 *
+	 * @param sede La sede de la cual se obtendrán las cédulas.
+	 * @return Lista de cédulas de los apostadores en la sede.
+	 */
+
 	private List<Long> obtenerCedulasPorSede(String sede) {
 		List<ApostadorDTO> apostadoresEnSede = apDao.getApostadoresPorSede(sede);
 
@@ -2243,6 +2271,16 @@ public class Controller implements ActionListener {
 		return cedulas;
 	}
 
+	/**
+	 * Verifica si el usuario no se encuentra en la lista de usuarios.
+	 *
+	 * @param nombreUsuario El nombre de usuario a verificar.
+	 * @param contrasena    La contraseña asociada al nombre de usuario.
+	 * @return true si el usuario no está en la lista, false en caso contrario.
+	 * @throws UsuarioNoEncontradoException Si el usuario no se encuentra en la
+	 *                                      lista.
+	 */
+
 	private boolean usuarioNoEncontrado(String nombreUsuario, String Contrasena) throws UsuarioNoEncontradoException {
 		for (UsuarioDTO usuario : usDao.getListaUsuarios()) {
 			if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(Contrasena)) {
@@ -2251,6 +2289,15 @@ public class Controller implements ActionListener {
 		}
 		return false;
 	}
+
+	/**
+	 * Accede a la siguiente pestaña después de la autenticación del usuario.
+	 *
+	 * @param nombreUsuario El nombre de usuario para la autenticación.
+	 * @param contrasena    La contraseña asociada al nombre de usuario.
+	 * @throws UsuarioNoEncontradoException Si el usuario no se encuentra en la
+	 *                                      lista.
+	 */
 
 	public void accesoSiguientePestaña(String nombreUsuario, String constrasena) throws UsuarioNoEncontradoException {
 		if (!usuarioNoEncontrado(nombreUsuario, constrasena)) {
@@ -2310,6 +2357,12 @@ public class Controller implements ActionListener {
 		}
 	}
 
+	/**
+	 * Obtiene los números seleccionados desde los ComboBoxes.
+	 *
+	 * @return Arreglo con los números seleccionados.
+	 */
+
 	private int[] obtenerNumerosDesdeComboBoxes() {
 		int[] numeros = new int[6];
 		for (int i = 0; i < 6; i++) {
@@ -2320,6 +2373,12 @@ public class Controller implements ActionListener {
 		return numeros;
 	}
 
+	/**
+	 * Verifica si un número es negativo.
+	 *
+	 * @param number El número a verificar.
+	 * @throws NumeroNegativoException Si el número es negativo.
+	 */
 	public void checkNumber(String number) throws NumeroNegativoException {
 		if (Integer.parseInt(number) < 0) {
 			throw new NumeroNegativoException(number);

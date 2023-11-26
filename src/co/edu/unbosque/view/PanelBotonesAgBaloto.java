@@ -8,10 +8,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PanelBotonesAgBaloto extends JPanel{
-	
+/**
+ * 
+ * Panel que contiene dos botones, uno para agregar y otro para salir en el
+ * contexto de Baloto.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
+public class PanelBotonesAgBaloto extends JPanel {
+
 	private JButton btn1, btn2;
-	
+
+	/**
+	 * Constructor que inicializa y configura los botones de agregar y salir.
+	 */
+
 	public PanelBotonesAgBaloto() {
 		// TODO Auto-generated constructor stub
 		btn1 = new JButton("Agregar");
@@ -23,9 +35,9 @@ public class PanelBotonesAgBaloto extends JPanel{
 		int alto4 = 54;
 		Image imagenRed4 = imTemporal3.getScaledInstance(anchoD4, alto4, Image.SCALE_SMOOTH);
 		btn1.setIcon(new ImageIcon(imagenRed4));
-		btn1.setPreferredSize(new Dimension(231,54));
+		btn1.setPreferredSize(new Dimension(231, 54));
 		add(btn1);
-		
+
 		btn2 = new JButton("Salir");
 		btn2.setActionCommand("SALIBALOTO");
 		btn2.setBackground(new Color(134, 124, 157));
@@ -35,21 +47,45 @@ public class PanelBotonesAgBaloto extends JPanel{
 		int alto5 = 54;
 		Image imagenRed5 = imTemporal4.getScaledInstance(anchoD5, alto5, Image.SCALE_SMOOTH);
 		btn2.setIcon(new ImageIcon(imagenRed5));
-		btn2.setPreferredSize(new Dimension(180,54));
+		btn2.setPreferredSize(new Dimension(180, 54));
 		add(btn2);
 	}
+
+	/**
+	 * Obtiene el botón de agregar.
+	 *
+	 * @return Botón de agregar.
+	 */
 
 	public JButton getBtn1() {
 		return btn1;
 	}
 
+	/**
+	 * Establece el botón de agregar.
+	 *
+	 * @param btn1 Botón de agregar a establecer.
+	 */
+
 	public void setBtn1(JButton btn1) {
 		this.btn1 = btn1;
 	}
 
+	/**
+	 * Obtiene el botón de salir.
+	 *
+	 * @return Botón de salir.
+	 */
+
 	public JButton getBtn2() {
 		return btn2;
 	}
+
+	/**
+	 * Establece el botón de salir.
+	 *
+	 * @param btn2 Botón de salir a establecer.
+	 */
 
 	public void setBtn2(JButton btn2) {
 		this.btn2 = btn2;

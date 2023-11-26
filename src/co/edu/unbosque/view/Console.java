@@ -2,6 +2,14 @@ package co.edu.unbosque.view;
 
 import java.util.Scanner;
 
+/**
+ * 
+ * La clase Console proporciona métodos para interactuar con la consola.
+ * Incluye métodos para leer la entrada del usuario y mostrar la salida en la consola.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class Console {
 	
 	private Scanner leer;

@@ -17,12 +17,27 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * PanelAgSede es una clase que representa un panel para agregar información de
+ * una sede. Este panel incluye campos para la ubicación y el número de
+ * empleados de la sede. También tiene un fondo de imagen.
+ * 
+ * @author AgudeloDaniel, GuizaSophy, GonzalezSergio, WakilGabriella 25-11-2023
+ */
+
 public class PanelAgSede extends JPanel {
 
+	// Atributos
 	private JLabel lblUbicacion, lblNumEmpleados;
 	private JTextField txtNumEmpleados;
 	private JComboBox<String> ubicacion;
 	private Image backgroundImage;
+
+	/**
+	 * Constructor de la clase PanelAgSede. Inicializa y configura los componentes
+	 * del panel.
+	 */
 
 	public PanelAgSede() {
 		setLayout(new GridBagLayout());
@@ -80,6 +95,12 @@ public class PanelAgSede extends JPanel {
 		backgroundImage = new ImageIcon("./imgs/vSedesLlenar.png").getImage();
 	}
 
+	/**
+	 * Sobrescribe el método paintComponent para dibujar el fondo de la imagen.
+	 *
+	 * @param g Objeto Graphics para dibujar en el componente.
+	 */
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -90,41 +111,101 @@ public class PanelAgSede extends JPanel {
 
 	// Métodos getters y setters
 
+	/**
+	 * Obtiene el campo de texto para el número de empleados.
+	 *
+	 * @return JTextField para el número de empleados.
+	 */
+
 	public JTextField getTxtNumEmpleados() {
 		return txtNumEmpleados;
 	}
+
+	/**
+	 * Obtiene la etiqueta de ubicación.
+	 *
+	 * @return JLabel de ubicación.
+	 */
 
 	public JLabel getLblUbicacion() {
 		return lblUbicacion;
 	}
 
+	/**
+	 * Establece la etiqueta de ubicación.
+	 *
+	 * @param lblUbicacion JLabel de ubicación a establecer.
+	 */
+
 	public void setLblUbicacion(JLabel lblUbicacion) {
 		this.lblUbicacion = lblUbicacion;
 	}
+
+	/**
+	 * Obtiene la etiqueta de número de empleados.
+	 *
+	 * @return JLabel de número de empleados.
+	 */
 
 	public JLabel getLblNumEmpleados() {
 		return lblNumEmpleados;
 	}
 
+	/**
+	 * Establece la etiqueta de número de empleados.
+	 *
+	 * @param lblNumEmpleados JLabel de número de empleados a establecer.
+	 */
+
 	public void setLblNumEmpleados(JLabel lblNumEmpleados) {
 		this.lblNumEmpleados = lblNumEmpleados;
 	}
+
+	/**
+	 * Obtiene el JComboBox de ubicación.
+	 *
+	 * @return JComboBox de ubicación.
+	 */
 
 	public JComboBox<String> getUbicacion() {
 		return ubicacion;
 	}
 
+	/**
+	 * Establece el JComboBox de ubicación.
+	 *
+	 * @param ubicacion JComboBox de ubicación a establecer.
+	 */
+
 	public void setUbicacion(JComboBox<String> ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+
+	/**
+	 * Establece el JTextField para el número de empleados.
+	 *
+	 * @param txtNumEmpleados JTextField para el número de empleados a establecer.
+	 */
 
 	public void setTxtNumEmpleados(JTextField txtNumEmpleados) {
 		this.txtNumEmpleados = txtNumEmpleados;
 	}
 
+	/**
+	 * Obtiene la imagen de fondo del panel.
+	 *
+	 * @return Imagen de fondo del panel.
+	 */
+
 	public Image getBackgroundImage() {
 		return backgroundImage;
 	}
+
+	/**
+	 * Establece la imagen de fondo del panel.
+	 *
+	 * @param backgroundImage Imagen de fondo del panel a establecer.
+	 */
 
 	public void setBackgroundImage(Image backgroundImage) {
 		this.backgroundImage = backgroundImage;
